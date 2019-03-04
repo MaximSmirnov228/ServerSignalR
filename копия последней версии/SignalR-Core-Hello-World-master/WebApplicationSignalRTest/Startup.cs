@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using ServerNetCore.Data;
 using WebApplicationSignalRTest;
 
 
@@ -25,9 +27,16 @@ namespace ServerNetCore
         // This method gets called by the runtime. Use this method to add services to the container. 
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseSqlServer(
+            //        Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseInMemoryDatabase("Auth"));
 
             services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+
+            services.AddAuthentication()
+                .AddCookie(cfg => cfg.SlidingExpiration = true)
                 .AddJwtBearer(options =>
                 {
                     options.RequireHttpsMetadata = false;
@@ -62,11 +71,16 @@ namespace ServerNetCore
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline. 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+            }
 
-          
+
+
             app.UseDefaultFiles();
-            app.UseStaticFiles();
-            app.UseAuthentication();
+      
             //app.Run(async (context) =>
             //{
             //    await context.Response.WriteAsync("Hello World!");
@@ -75,6 +89,19 @@ namespace ServerNetCore
             app.UseSignalR(routes =>
             {
                 routes.MapHub<ChatHub>("/chat");
+            });
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseCookiePolicy();
+
+            app.UseAuthentication();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
 
 
