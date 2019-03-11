@@ -34,6 +34,11 @@ namespace ServerNetCore
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseInMemoryDatabase("Auth"));
 
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
             services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 
             services.AddAuthentication()
@@ -103,7 +108,7 @@ namespace ServerNetCore
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
             MyIdentityDataInitializer.SeedData(userManager, roleManager);
-            app.UseMvc();
+            
         }
     }
 }
