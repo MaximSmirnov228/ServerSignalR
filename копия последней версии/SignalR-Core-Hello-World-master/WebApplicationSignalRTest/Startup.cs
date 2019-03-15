@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using System;
+using System.Runtime.CompilerServices;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using ServerNetCore.Data;
+using ServerNetCore.Models;
 using WebApplicationSignalRTest;
 
 namespace ServerNetCore
@@ -23,8 +26,6 @@ namespace ServerNetCore
 
         public IConfiguration Configuration { get; }
 
-
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -34,10 +35,9 @@ namespace ServerNetCore
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseInMemoryDatabase("Auth"));
 
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<Person>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
 
             services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 
@@ -63,7 +63,6 @@ namespace ServerNetCore
                         ValidateIssuerSigningKey = true
                     };
                 });
-           
 
             services.AddSignalR();
 
@@ -71,7 +70,7 @@ namespace ServerNetCore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<IdentityUser> userManager,
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<Person> userManager,
             RoleManager<IdentityRole> roleManager
         )
         {
@@ -80,8 +79,6 @@ namespace ServerNetCore
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
-           
-
 
             app.UseDefaultFiles();
 
@@ -95,7 +92,6 @@ namespace ServerNetCore
                 routes.MapHub<ChatHub>("/chat");
             });
 
-          
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
@@ -107,8 +103,7 @@ namespace ServerNetCore
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            MyIdentityDataInitializer.SeedData(userManager, roleManager);
-            
+            MyIdentityDataInitializer.SeedData(userManager);
         }
     }
 }
