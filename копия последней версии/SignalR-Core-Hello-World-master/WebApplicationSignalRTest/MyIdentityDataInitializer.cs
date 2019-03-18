@@ -10,26 +10,26 @@ namespace ServerNetCore
     public static class MyIdentityDataInitializer
 
     {
-        //private const string RoleUser = "User";
+        private const string RoleUser = "User";
 
-        public static void SeedData(UserManager<Person> userManager)
+        public static void SeedData(UserManager<Person> userManager, RoleManager<IdentityRole> roleManager)
         {
-            //SeedRoles(roleManager);
+            SeedRoles(roleManager);
             SeedUsers(userManager);
         }
 
-        //public static void SeedRoles(RoleManager<IdentityRole> roleManager)
-        //{
-        //    if (!roleManager.RoleExistsAsync
-        //        (RoleUser).Result)
-        //    {
-        //        var role = new IdentityRole();
-        //        role.Name = RoleUser;
-        //        //role.Description = "Perform normal operations.";
-        //        IdentityResult roleResult = roleManager.
-        //            CreateAsync(role).Result;
-        //    }
-        //}
+        public static void SeedRoles(RoleManager<IdentityRole> roleManager)
+        {
+            if (!roleManager.RoleExistsAsync
+                (RoleUser).Result)
+            {
+                var role = new IdentityRole();
+                role.Name = RoleUser;
+                //role.Description = "Perform normal operations.";
+                IdentityResult roleResult = roleManager.
+                    CreateAsync(role).Result;
+            }
+        }
 
         public static void SeedUsers(UserManager<Person> userManager)
         {
@@ -46,11 +46,11 @@ namespace ServerNetCore
                 IdentityResult result = userManager.CreateAsync
                     (user, Password).Result;
 
-                //if (result.Succeeded)
-                //{
-                //    var resWait = userManager.AddToRoleAsync(user,
-                //        RoleUser).Result;
-                //}
+                if (result.Succeeded)
+                {
+                    var resWait = userManager.AddToRoleAsync(user,
+                        RoleUser).Result;
+                }
             }
         }
     }

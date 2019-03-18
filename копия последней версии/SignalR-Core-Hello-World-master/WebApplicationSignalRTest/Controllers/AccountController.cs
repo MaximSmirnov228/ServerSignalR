@@ -18,10 +18,12 @@ namespace ServerNetCore.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<Person> _userManager;
+        private readonly SignInManager<Person> _signInManager;
 
-        public AccountController(UserManager<Person> userManager)
+        public AccountController(UserManager<Person> userManager, SignInManager<Person> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [HttpGet]
@@ -38,22 +40,13 @@ namespace ServerNetCore.Controllers
                 Person user = new Person { Email = model.Email, UserName = model.Email, Year = model.Year };
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
                     // установка token
 
-                    var now = DateTime.UtcNow;
-                    var jwt = new JwtSecurityToken(
-                        AuthOptions.Issuer,
-                        AuthOptions.Audience,
-                        notBefore: now,
-                        claims: User.Claims,
-                        expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LifeTime)),
-                        signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(),
-                            SecurityAlgorithms.HmacSha256));
-
-                    var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-                    return Content(encodedJwt);
+                    await _signInManager.SignInAsync(user, false);
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
