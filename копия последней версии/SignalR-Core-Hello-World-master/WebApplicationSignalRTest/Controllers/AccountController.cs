@@ -12,9 +12,11 @@ using ServerNetCore.Models;
 using Microsoft.AspNetCore.Identity;
 using ServerNetCore.ViewModels;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ServerNetCore.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly UserManager<Person> _userManager;
