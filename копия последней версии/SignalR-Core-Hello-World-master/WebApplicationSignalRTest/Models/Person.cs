@@ -9,7 +9,8 @@ namespace ServerNetCore.Models
     public class Person : IdentityUser
     {
         //public string Login { get; set; }
-        //public string Password { get; set; }
+        public string Password { get; set; }
+
         //public string Role { get; set; }
         public int Year { get; set; }
     }
