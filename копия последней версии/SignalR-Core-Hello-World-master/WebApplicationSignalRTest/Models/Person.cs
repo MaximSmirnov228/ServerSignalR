@@ -12,6 +12,9 @@ namespace ServerNetCore.Models
         public string Password { get; set; }
 
         //public string Role { get; set; }
-        public int Year { get; set; }
+        public string Name { get; set; }
+
+        public string Fam { get; set; }
+        public string Pol { get; set; }
     }
 }
