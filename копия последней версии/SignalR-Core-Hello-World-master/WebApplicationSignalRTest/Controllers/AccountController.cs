@@ -32,68 +32,6 @@ namespace ServerNetCore.Controllers
         //[Route("api/[controller]/GetToken")]
         public async Task<IActionResult> GetTokenAuth()
         {
-            if (HttpContext.Request.Headers.TryGetValue("Authorization", out var authorization))
-            {
-                var authHeader = authorization.ToString();
-                if (authHeader?.StartsWith("basic", StringComparison.OrdinalIgnoreCase) ?? false)
-                {
-                    var token = authHeader.Substring("Basic ".Length).Trim();
-                    System.Console.WriteLine(token);
-                    var credentialstring = Encoding.UTF8.GetString(Convert.FromBase64String(token));
-                    var credentials = credentialstring.Split(':');
-                    //Authorization
-                    // basic asdasdasdcdcasgfdlgkdsjgkdfjgb
-                    var name = await _userManager.FindByNameAsync(credentials[0]);
-                    if (name == null)
-                    {
-                        return StatusCode(401, "Не верное имя");
-                    }
-                    var Fam = await _userManager.FindByNameAsync(credentials[1]);
-                    if (Fam == null)
-                    {
-                        return StatusCode(401, "Не верное Фамилия");
-                    }
-                    var Pol = await _userManager.FindByNameAsync(credentials[2]);
-                    if (Pol == null)
-                    {
-                        return StatusCode(401, "Не верно указан пол");
-                    }
-                    var user = await _userManager.FindByEmailAsync(credentials[3]);
-                    if (user == null)
-                    {
-                        return StatusCode(401, "Не верный логин или пароль1");
-                    }
-
-                    var res = await _userManager.CheckPasswordAsync(user, credentials[4]);
-                    if (res)
-                    {
-                        var now = DateTime.UtcNow;
-                        var jwt = new JwtSecurityToken(
-                            AuthOptions.Issuer,
-                            AuthOptions.Audience,
-                            notBefore: now,
-                            claims: User.Claims,
-                            expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LifeTime)),
-                            signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(),
-                                SecurityAlgorithms.HmacSha256));
-
-                        var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-                        return Content(encodedJwt);
-                    }
-                    else
-                    {
-                        return StatusCode(401, "Не верный логин или пароль2");
-                    }
-                }
-                else
-                {
-                    return StatusCode(400, "Не верная структура токена");
-                }
-            }
-            else
-            {
-                return StatusCode(400, "Не обноружен заголовок Body ");
-            }
         }
     }
 }
