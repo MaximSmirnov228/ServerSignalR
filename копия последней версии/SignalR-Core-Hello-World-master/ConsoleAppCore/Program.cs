@@ -13,7 +13,6 @@ namespace ClientNetCore
 {
     internal class Program
     {
-
         private static void Main(string[] args)
         {
             var input = args[0];
@@ -21,14 +20,30 @@ namespace ClientNetCore
             //string login;
             //string password;
             string token;
+            //Console.Write("Enter your FirstName: ");
+            //string  FirstName = Console.ReadLine();
+            //Console.Write("Enter your LastName: ");
+            //string LastName = Console.ReadLine();
+            //Console.Write("Enter your Gender: ");
+            //string Gender = Console.ReadLine();
+            //Console.Write("Enter your Email: ");
+            //string Email = Console.ReadLine();
+            //Console.Write("Enter your Password: ");
+            //string Password = Console.ReadLine();
             switch (input)
             {
                 case "admin":
-                     token = GetTokenAdmin();
+                    token = GetTokenAdmin();
                     break;
+
                 case "qwerty":
                     token = GetTokenQwerty();
                     break;
+
+                case "admin2":
+                    token = RegisterUser();
+                    break;
+
                 default: throw new ArgumentException();
             }
 
@@ -37,7 +52,19 @@ namespace ClientNetCore
                 Test(token);
                 Console.ReadLine();
             }
+        }
 
+        public static string RegisterUser()
+        {
+            var client = new RestClient("http://localhost:50338/Account/Register");
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Postman-Token", "8fdd4a66-45fd-4308-80c1-896607c3c4b1");
+            request.AddHeader("cache-control", "no-cache");
+            request.AddHeader("Content-Type", "application/json");
+            request.AddParameter("undefined", "{\"FirstName\":\"dima\",\n\"LastName\":\"soniev\",\n\"Gender\":\"m\",\n\"Email\":\"admin2@gmail.com\",\n\"Password\":\"Qwerty12345&\"\n}", ParameterType.RequestBody);
+            //request.AddParameter("undefined", $"{{\"FirstName\":{FirstName},\n\"LastName\":{LastName},\n\"Gender\":{Gender},\n\"Email\":{Email},\n\"Password\":{Password}\n}}", ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+            return RegisterUser();
         }
 
         public static string GetTokenQwerty()
@@ -63,7 +90,6 @@ namespace ClientNetCore
             return token;
         }
 
-
         public static string GetTokenAdmin()
         {
             Console.WriteLine(".Net Core 2.1");
@@ -85,8 +111,6 @@ namespace ClientNetCore
 
             //Console.WriteLine($"{token},{username}");
 
-
-
             //}
             //var anonynObj = new
             //{
@@ -101,12 +125,11 @@ namespace ClientNetCore
 
             return token;
         }
+
         public static void Test(string token)
-        { 
+        {
             try
             {
-                
-             
                 Console.WriteLine(token);
                 var connection = new HubConnectionBuilder()
                     .WithUrl("http://localhost:50338/chat",
@@ -114,7 +137,7 @@ namespace ClientNetCore
                     .Build();
 
                 //connection.On<string, string>("ReceiveMessage", (name, message) => Console.WriteLine($"{name}  {message}"));
-                connection.On<string, string>("ReceiveMessage", (sender,resJob) => Console.WriteLine($"sender {sender}\t mgs {resJob}"));
+                connection.On<string, string>("ReceiveMessage", (sender, resJob) => Console.WriteLine($"sender {sender}\t mgs {resJob}"));
                 //connection.On<string>("ReceiveMessageAuth", (resJob) => Console.WriteLine($"result Auth {resJob}"));
                 //connection.On<string,string>("ReceiveMessageTask", Print);
 
@@ -140,20 +163,16 @@ namespace ClientNetCore
                 while (true)
 
                 {
-                    
                     var message = Console.ReadLine();
-                    
 
-                    connection.InvokeAsync("SendMessage", nameInterlocutor, message ).Wait();
+                    connection.InvokeAsync("SendMessage", nameInterlocutor, message).Wait();
                     //connection.InvokeAsync("SendMessageAuth", virtualClientId, message).Wait();
 
                     //connection.InvokeAsync("RecieveMessageAuth", "HelloMan").Wait();
                     //connection.InvokeAsync("RecieveMessageAuth", "HelloMan").Wait();
                     //connection.InvokeAsync("RecieveMessage", message);
                     //connection.InvokeAsync("RecieveMessageAuth", message);
-
                 }
-
             }
             catch (Exception ex)
             {
@@ -161,7 +180,7 @@ namespace ClientNetCore
             }
         }
 
-        private static void Print(string userName,string message)
+        private static void Print(string userName, string message)
         {
             Console.WriteLine($"{userName}  {message}  ");
         }

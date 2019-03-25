@@ -23,9 +23,9 @@ namespace ServerNetCore.Controllers
     //[ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<Person> _userManager;
+        private readonly UserManager<User> _userManager;
 
-        public AuthController(UserManager<Person> userManager)
+        public AuthController(UserManager<User> userManager)
         {
             _userManager = userManager;
         }

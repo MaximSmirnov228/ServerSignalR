@@ -35,7 +35,7 @@ namespace ServerNetCore
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseInMemoryDatabase("Auth"));
 
-            services.AddIdentity<Person, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>()
                 //.AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -70,7 +70,7 @@ namespace ServerNetCore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<Person> userManager,
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<User> userManager,
             RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())

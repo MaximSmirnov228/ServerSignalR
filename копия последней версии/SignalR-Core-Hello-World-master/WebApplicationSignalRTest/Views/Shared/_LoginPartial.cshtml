@@ -2,8 +2,8 @@
 @using Microsoft.AspNetCore.Identity
 @using ServerNetCore.Models
 
-@inject SignInManager<Person> SignInManager
-@inject UserManager<Person> UserManager
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
 @if (SignInManager.IsSignedIn(User))
 {

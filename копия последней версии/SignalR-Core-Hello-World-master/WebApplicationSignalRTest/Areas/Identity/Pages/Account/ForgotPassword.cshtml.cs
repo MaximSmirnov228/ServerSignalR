@@ -15,10 +15,10 @@ namespace ServerNetCore.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ForgotPasswordModel : PageModel
     {
-        private readonly UserManager<Person> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly IEmailSender _emailSender;
 
-        public ForgotPasswordModel(UserManager<Person> userManager, IEmailSender emailSender)
+        public ForgotPasswordModel(UserManager<User> userManager, IEmailSender emailSender)
         {
             _userManager = userManager;
             _emailSender = emailSender;

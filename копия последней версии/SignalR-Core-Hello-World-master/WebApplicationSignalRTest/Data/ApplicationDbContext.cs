@@ -8,7 +8,7 @@ using ServerNetCore.Models;
 
 namespace ServerNetCore.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<Person>
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

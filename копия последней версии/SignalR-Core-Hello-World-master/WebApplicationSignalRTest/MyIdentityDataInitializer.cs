@@ -12,7 +12,7 @@ namespace ServerNetCore
     {
         private const string RoleUser = "User";
 
-        public static void SeedData(UserManager<Person> userManager, RoleManager<IdentityRole> roleManager)
+        public static void SeedData(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             SeedRoles(roleManager);
             SeedUsers(userManager);
@@ -31,7 +31,7 @@ namespace ServerNetCore
             }
         }
 
-        public static void SeedUsers(UserManager<Person> userManager)
+        public static void SeedUsers(UserManager<User> userManager)
         {
             string Email = "admin@gmail.com";
             string Password = "Qwerty12345&";
@@ -39,7 +39,7 @@ namespace ServerNetCore
             if (userManager.FindByNameAsync
                     (Email).Result == null)
             {
-                Person user = new Person();
+                User user = new User();
                 user.UserName = Email;
                 user.Email = Email;
 
