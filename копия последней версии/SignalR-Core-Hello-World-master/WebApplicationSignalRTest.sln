@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientNetCore", "ConsoleApp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatLibrary", "ChatLibrari\ChatLibrary.csproj", "{B3AE1DB7-63F6-4B55-9798-172FB501CF56}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAuth", "TestAuth\TestAuth.csproj", "{BE287FE1-B17B-4C11-B302-4462F6954998}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B3AE1DB7-63F6-4B55-9798-172FB501CF56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3AE1DB7-63F6-4B55-9798-172FB501CF56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3AE1DB7-63F6-4B55-9798-172FB501CF56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE287FE1-B17B-4C11-B302-4462F6954998}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE287FE1-B17B-4C11-B302-4462F6954998}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE287FE1-B17B-4C11-B302-4462F6954998}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE287FE1-B17B-4C11-B302-4462F6954998}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace ChatLibrari
 {
-   public  class Data
+    public class Data
     {
         public string access_token;
-        public string username;
     }
 }

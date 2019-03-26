@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -42,11 +43,13 @@ namespace ServerNetCore
             services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 
             services.AddAuthentication()
+
                 .AddCookie(cfg => cfg.SlidingExpiration = true)
                 .AddJwtBearer(options =>
                 {
                     options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = new TokenValidationParameters
+
                     {
                         // указывает, будет ли валидироваться издатель при валидации токена
                         ValidateIssuer = true,

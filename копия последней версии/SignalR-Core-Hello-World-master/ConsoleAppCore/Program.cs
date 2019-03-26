@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 using ChatLibrari;
+using RestSharp.Serialization.Json;
 
 namespace ClientNetCore
 
@@ -15,6 +16,8 @@ namespace ClientNetCore
     {
         private static void Main(string[] args)
         {
+            //RegisterUser();
+            //Console.WriteLine(RegisterUser());
             var input = args[0];
             //Console.WriteLine(input);
             //string login;
@@ -64,18 +67,25 @@ namespace ClientNetCore
             request.AddParameter("undefined", "{\"FirstName\":\"dima\",\n\"LastName\":\"soniev\",\n\"Gender\":\"m\",\n\"Email\":\"admin2@gmail.com\",\n\"Password\":\"Qwerty12345&\"\n}", ParameterType.RequestBody);
             //request.AddParameter("undefined", $"{{\"FirstName\":{FirstName},\n\"LastName\":{LastName},\n\"Gender\":{Gender},\n\"Email\":{Email},\n\"Password\":{Password}\n}}", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
-            return RegisterUser();
+            string error = JsonConvert.ToString(response.Content);
+
+            return error;
         }
 
         public static string GetTokenQwerty()
         {
-            var client = new RestClient("http://localhost:50338/token");
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("Postman-Token", "d34a96d9-ed00-4362-9c36-e22de088eed7");
+            Console.WriteLine(".Net Core 2.1");
+
+            var client = new RestClient("http://localhost:50338/auth/gettoken");
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("Postman-Token", "0811728e-9196-4f3e-a300-c7d399bea18b");
             request.AddHeader("cache-control", "no-cache");
-            request.AddHeader("content-type", "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW");
-            request.AddParameter("multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW", "------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"userName\"\r\n\r\nqwerty\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"password\"\r\n\r\n55555\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--", ParameterType.RequestBody);
+            request.AddHeader("Authorization", "Basic YWRtaW5AZ21haWwuY29tOlF3ZXJ0eTEyMzQ1Jg==");
             IRestResponse response = client.Execute(request);
+
+            string token = JsonConvert.ToString(response.Content);
+
+            return token;
             //var anonynObj = new
             //{
             //    accessToken = string.Empty,
@@ -83,24 +93,35 @@ namespace ClientNetCore
             //};
             //var val = JsonConvert.DeserializeAnonymousType(response.Content, anonynObj);
             //return val.accessToken;
-            Data data = JsonConvert.DeserializeObject<Data>(response.Content);
-            string token = data.access_token;
-            string username = data.username;
+            //Data data = JsonConvert.DeserializeObject<Data>(response.Content);
+            //string token = data.access_token;
+            //string username = data.username;
 
-            return token;
+            //return token;
         }
 
         public static string GetTokenAdmin()
         {
             Console.WriteLine(".Net Core 2.1");
 
-            var client = new RestClient("http://localhost:50338/token");
-            var request = new RestRequest(Method.POST);
-
+            var client = new RestClient("http://localhost:50338/auth/gettoken");
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("Postman-Token", "0811728e-9196-4f3e-a300-c7d399bea18b");
             request.AddHeader("cache-control", "no-cache");
-            request.AddHeader("content-type", "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW");
-            request.AddParameter("multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW", "------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"userName\"\r\n\r\nadmin@gmail.com\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"password\"\r\n\r\n12345\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--", ParameterType.RequestBody);
+            request.AddHeader("Authorization", "Basic YWRtaW5AZ21haWwuY29tOlF3ZXJ0eTEyMzQ1Jg==");
             IRestResponse response = client.Execute(request);
+
+            string token = JsonConvert.ToString(response.Content);
+
+            return token;
+
+            //var client = new RestClient("http://localhost:50338/token");
+            //var request = new RestRequest(Method.POST);
+
+            //request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("content-type", "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW");
+            //request.AddParameter("multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW", "------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"userName\"\r\n\r\nadmin@gmail.com\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"password\"\r\n\r\n12345\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--", ParameterType.RequestBody);
+            //IRestResponse response = client.Execute(request);
             //if (response.StatusCode == System.Net.HttpStatusCode.OK)
             //{
             //    //var data = new JsonSerializer().Deserialize<Data>(response.Content);
@@ -119,11 +140,11 @@ namespace ClientNetCore
             //};
 
             //var data = JsonConvert.DeserializeAnonymousType(response.Content,anonynObj);
-            Data data = JsonConvert.DeserializeObject<Data>(response.Content);
-            string token = data.access_token;
-            string username = data.username;
+            //Data data = JsonConvert.DeserializeObject<Data>(response.Content);
+            //string token = data.access_token;
+            //string username = data.username;
 
-            return token;
+            //return token;
         }
 
         public static void Test(string token)
@@ -131,6 +152,7 @@ namespace ClientNetCore
             try
             {
                 Console.WriteLine(token);
+
                 var connection = new HubConnectionBuilder()
                     .WithUrl("http://localhost:50338/chat",
                         options => { options.AccessTokenProvider = () => Task.FromResult(token); })
