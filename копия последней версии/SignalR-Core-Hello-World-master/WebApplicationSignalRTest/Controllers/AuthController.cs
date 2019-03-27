@@ -51,6 +51,8 @@ namespace ServerNetCore.Controllers
                     {
                         return StatusCode(401, "Не верный логин или пароль1");
                     }
+
+                    var identity = await GetIdentity(user);
                     var res = await _userManager.CheckPasswordAsync(user, credentials[1]);
                     if (res)
                     {
@@ -59,12 +61,13 @@ namespace ServerNetCore.Controllers
                             AuthOptions.Issuer,
                             AuthOptions.Audience,
                             notBefore: now,
-                            claims: User.Claims,
+                            claims: identity.Claims,
                             expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LifeTime)),
                             signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(),
                                 SecurityAlgorithms.HmacSha256));
 
                         var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+
                         return Content(encodedJwt);
                     }
                     else
@@ -81,6 +84,20 @@ namespace ServerNetCore.Controllers
             {
                 return StatusCode(400, "Не обноружен заголовок Authorization ");
             }
+        }
+
+        [NonAction]
+        private async Task<ClaimsIdentity> GetIdentity(User user)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, "user"),
+            };
+            ClaimsIdentity claimsIdentity =
+                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
+                    ClaimsIdentity.DefaultRoleClaimType);
+            return claimsIdentity;
         }
     }
 }
