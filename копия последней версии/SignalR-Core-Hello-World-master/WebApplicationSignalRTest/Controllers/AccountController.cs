@@ -15,6 +15,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using System.Net.Http;
 using System.Net;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace ServerNetCore.Controllers
 {
@@ -72,6 +73,14 @@ namespace ServerNetCore.Controllers
                 }
                 return Content("Не валидная модель" + sb.ToString());
             }
+        }
+
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public IActionResult GetAllUsers()
+        {
+            var users = _userManager.Users.ToList().Select(x => x.Email);
+            return Content(JsonConvert.SerializeObject(users));
         }
     }
 }
