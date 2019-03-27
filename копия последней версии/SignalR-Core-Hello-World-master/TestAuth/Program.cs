@@ -18,30 +18,29 @@ namespace TestAuth
     {
         private static void Main(string[] args)
         {
-            string data;
             Console.WriteLine("Hello World!");
-            while (true)
-            {
-                data = GetTokenAdmin();
-                Console.WriteLine(data);
-            }
+            RegisterUser();
+            string data = RegisterUser();
+            Console.WriteLine(data);
+            //while (true)
+            //{
+            //}
+            while (Console.ReadKey().Key != ConsoleKey.Escape) ;
         }
 
-        public static string GetTokenAdmin()
+        public static string RegisterUser()
         {
-            Console.WriteLine(".Net Core 2.1");
-
-            var client = new RestClient("http://localhost:50338/auth/gettoken");
-            var request = new RestRequest(Method.GET);
-            request.AddHeader("Postman-Token", "0811728e-9196-4f3e-a300-c7d399bea18b");
+            var client = new RestClient("http://localhost:50338/Account/Register");
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Postman-Token", "8fdd4a66-45fd-4308-80c1-896607c3c4b1");
             request.AddHeader("cache-control", "no-cache");
-            request.AddHeader("Authorization", "Basic YWRtaW5AZ21haWwuY29tOlF3ZXJ0eTEyMzQ1Jg==");
+            request.AddHeader("Content-Type", "application/json");
+            request.AddParameter("undefined", "{\"FirstName\":\"dima\",\n\"LastName\":\"soniev\",\n\"Gender\":\"m\",\n\"Email\":\"qwerty@gmail.com\",\n\"Password\":\"Qwerty12345&\"\n}", ParameterType.RequestBody);
+            //request.AddParameter("undefined", $"{{\"FirstName\":{FirstName},\n\"LastName\":{LastName},\n\"Gender\":{Gender},\n\"Email\":{Email},\n\"Password\":{Password}\n}}", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
+            string error = JsonConvert.ToString(response.Content);
 
-            string data = JsonConvert.ToString(response.Content);
-            //string token = data.access_token;
-            //string username = data.username;
-            return data;
+            return error;
         }
     }
 }

@@ -31,7 +31,7 @@ namespace ServerNetCore.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         //[Route("api/[controller]/GetToken")]
         public async Task<IActionResult> GetToken()
         {

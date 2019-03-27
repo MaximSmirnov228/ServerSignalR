@@ -18,11 +18,48 @@ namespace ClientNetCore
         {
             //RegisterUser();
             //Console.WriteLine(RegisterUser());
-            var input = args[0];
+
+            string token;
+            if (args != null && args.Length > 0)
+            {
+                var input = args[0];
+                switch (input)
+                {
+                    case "admin":
+                        token = GetTokenAdmin();
+                        break;
+
+                    case "qwerty":
+                        token = GetTokenQwerty();
+                        break;
+
+                    case "admin2":
+                        token = RegisterUser();
+                        break;
+
+                    default: throw new ArgumentException();
+                }
+            }
+            else
+            {
+                var client = new RestClient("http://localhost:50338/auth/gettoken");
+                var request = new RestRequest(Method.GET);
+                request.AddHeader("cache-control", "no-cache");
+                request.AddHeader("Authorization", "Basic YWRtaW5AZ21haWwuY29tOlF3ZXJ0eTEyMzQ1Jg==");
+                IRestResponse response = client.Execute(request);
+
+                token = response.Content;
+
+                //token = token.Remove(0, 1);
+                //int length = 204;
+                //String sub = token.Substring(0, length);
+                //token = sub;
+                //Data data = JsonConvert.DeserializeObject<Data>(response.Content);
+                //token = data.access_token;
+            }
             //Console.WriteLine(input);
             //string login;
             //string password;
-            string token;
             //Console.Write("Enter your FirstName: ");
             //string  FirstName = Console.ReadLine();
             //Console.Write("Enter your LastName: ");
@@ -33,22 +70,6 @@ namespace ClientNetCore
             //string Email = Console.ReadLine();
             //Console.Write("Enter your Password: ");
             //string Password = Console.ReadLine();
-            switch (input)
-            {
-                case "admin":
-                    token = GetTokenAdmin();
-                    break;
-
-                case "qwerty":
-                    token = GetTokenQwerty();
-                    break;
-
-                case "admin2":
-                    token = RegisterUser();
-                    break;
-
-                default: throw new ArgumentException();
-            }
 
             while (true)
             {
@@ -78,7 +99,6 @@ namespace ClientNetCore
 
             var client = new RestClient("http://localhost:50338/auth/gettoken");
             var request = new RestRequest(Method.GET);
-            request.AddHeader("Postman-Token", "0811728e-9196-4f3e-a300-c7d399bea18b");
             request.AddHeader("cache-control", "no-cache");
             request.AddHeader("Authorization", "Basic YWRtaW5AZ21haWwuY29tOlF3ZXJ0eTEyMzQ1Jg==");
             IRestResponse response = client.Execute(request);
@@ -111,7 +131,8 @@ namespace ClientNetCore
             request.AddHeader("Authorization", "Basic YWRtaW5AZ21haWwuY29tOlF3ZXJ0eTEyMzQ1Jg==");
             IRestResponse response = client.Execute(request);
 
-            string token = JsonConvert.ToString(response.Content);
+            Data data = JsonConvert.DeserializeObject<Data>(response.Content);
+            string token = data.access_token;
 
             return token;
 
@@ -181,6 +202,7 @@ namespace ClientNetCore
 
                 //connection.InvokeAsync("RecieveMessage", "HELLO").Wait();
                 //connection.InvokeAsync("RecieveMessageAuth", "HelloMan").Wait();
+
                 Console.WriteLine("input msg...");
                 while (true)
 
