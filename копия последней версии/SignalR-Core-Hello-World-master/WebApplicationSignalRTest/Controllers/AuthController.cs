@@ -44,8 +44,7 @@ namespace ServerNetCore.Controllers
                     System.Console.WriteLine(token);
                     var credentialstring = Encoding.UTF8.GetString(Convert.FromBase64String(token));
                     var credentials = credentialstring.Split(':');
-                    //Authorization
-                    // basic asdasdasdcdcasgfdlgkdsjgkdfjgb
+
                     var user = await _userManager.FindByEmailAsync(credentials[0]);
                     if (user == null)
                     {
