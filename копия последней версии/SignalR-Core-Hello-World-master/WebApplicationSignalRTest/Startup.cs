@@ -32,7 +32,7 @@ namespace ServerNetCore
         {
             //services.AddDbContext<ApplicationDbContext>(options =>
             //    options.UseSqlServer(
-            //        Configuration.GetConnectionString("DefaultConnection")));
+            //        Configuration.GetConnectionString("Auth")));
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseInMemoryDatabase("Auth"));
 
