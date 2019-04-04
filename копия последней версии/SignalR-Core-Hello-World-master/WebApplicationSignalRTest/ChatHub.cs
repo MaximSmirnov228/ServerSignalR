@@ -15,8 +15,8 @@ namespace WebApplicationSignalRTest
         public async Task SendMessage(string idUser, string message)
         {
             var virtualClientId = Context.User.Identity.Name;
-            await Clients.User(idUser).SendAsync("ReceiveMessage", virtualClientId, message);
-            await Clients.Caller.SendAsync("ReceiveMessage", virtualClientId, message);
+            await Clients.User(idUser).SendAsync("ReceiveMessage", virtualClientId, message + " " + DateTime.Now.ToShortTimeString());
+            await Clients.Caller.SendAsync("ReceiveMessage", virtualClientId, message + " " + DateTime.Now.ToShortTimeString());
         }
     }
 }
