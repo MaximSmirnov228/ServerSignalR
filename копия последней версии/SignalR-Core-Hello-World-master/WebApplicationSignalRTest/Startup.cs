@@ -30,11 +30,12 @@ namespace ServerNetCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(
-            //        Configuration.GetConnectionString("Auth")));
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseInMemoryDatabase("Auth"));
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("Connection")));
+
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseInMemoryDatabase("Auth"));
 
             services.AddIdentity<User, IdentityRole>()
                 //.AddRoles<IdentityRole>()
@@ -105,7 +106,7 @@ namespace ServerNetCore
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            MyIdentityDataInitializer.SeedData(userManager, roleManager);
+            //MyIdentityDataInitializer.SeedData(userManager, roleManager);
         }
     }
 }
