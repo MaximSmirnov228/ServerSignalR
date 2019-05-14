@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using ServerNetCore.Areas.Identity.Pages.Account;
 using ServerNetCore.Models;
+using RegisterModel = ServerNetCore.ViewModels.RegisterModel;
 
 namespace ServerNetCore.Data
 {
@@ -17,12 +19,12 @@ namespace ServerNetCore.Data
         }
 
         // ДОДЕЛАТЬ НАДО
-        public ApplicationDbContext()
-        {
-            using (ApplicationDbContext dbContext = new ApplicationDbContext())
-            {
-            }
-        }
+        //public ApplicationDbContext()
+        //{
+        //    using (ApplicationDbContext dbContext = new ApplicationDbContext())
+        //    {
+        //    }
+        //}
 
         //protected override void OnModelCreating(ModelBuilder builder)
         //{

@@ -14,7 +14,7 @@ namespace WebApplicationSignalRTest
     public class ChatHub : Hub
     {
         //доделать надо
-        private readonly ApplicationDbContext context = new ApplicationDbContext();
+        //private readonly ApplicationDbContext context = new ApplicationDbContext();
 
         public async Task SendMessage(string idUser, string message)
         {
