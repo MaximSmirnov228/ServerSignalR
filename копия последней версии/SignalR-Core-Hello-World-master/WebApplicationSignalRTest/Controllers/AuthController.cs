@@ -48,7 +48,7 @@ namespace ServerNetCore.Controllers
                     var user = await _userManager.FindByEmailAsync(credentials[0]);
                     if (user == null)
                     {
-                        return StatusCode(401, "Не верный логин или пароль1");
+                        return StatusCode(401, "Не верный логин");
                     }
 
                     var identity = await GetIdentity(user);
@@ -71,7 +71,7 @@ namespace ServerNetCore.Controllers
                     }
                     else
                     {
-                        return StatusCode(401, "Не верный логин или пароль2");
+                        return StatusCode(401, "Не верный пароль");
                     }
                 }
                 else

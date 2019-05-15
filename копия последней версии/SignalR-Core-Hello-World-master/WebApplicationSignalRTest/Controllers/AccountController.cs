@@ -71,7 +71,7 @@ namespace ServerNetCore.Controllers
                         sb.AppendLine(error.ErrorMessage);
                     }
                 }
-                return Content("Не валидная модель" + sb.ToString());
+                return Content(sb.ToString());
             }
         }
 
