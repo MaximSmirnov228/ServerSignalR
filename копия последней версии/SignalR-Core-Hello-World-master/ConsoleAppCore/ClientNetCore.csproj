@@ -14,8 +14,4 @@
     <PackageReference Include="RestSharp" Version="106.6.7" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ChatLibrari\ChatLibrary.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -45,7 +45,7 @@ namespace ServerNetCore
 
         public override IdentityError DuplicateUserName(string userName)
         {
-            return new IdentityError { Code = nameof(DuplicateUserName), Description = $"User Name '{userName}' is already taken." };
+            return new IdentityError { Code = nameof(DuplicateUserName), Description = $"Пользователь с таким логином уже существует '{userName}'." };
         }
 
         public override IdentityError DuplicateEmail(string email)
