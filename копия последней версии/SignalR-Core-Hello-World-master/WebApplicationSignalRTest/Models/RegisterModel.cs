@@ -13,11 +13,11 @@ namespace ServerNetCore.ViewModels
         public string FirstName { get; set; }
 
         [Required]
+        [DataType(DataType.EmailAddress)]
         [Display(Name = "LastName")]
         public string LastName { get; set; }
 
         [Required]
-        [DataType(DataType.EmailAddress)]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -27,7 +27,7 @@ namespace ServerNetCore.ViewModels
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Пароль")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
     }
 }
