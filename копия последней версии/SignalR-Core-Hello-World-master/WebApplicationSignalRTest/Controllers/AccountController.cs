@@ -52,7 +52,7 @@ namespace ServerNetCore.Controllers
                 else
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.AppendLine("Ошибки");
+
                     foreach (var error in result.Errors)
                     {
                         sb.AppendLine(error.Description);

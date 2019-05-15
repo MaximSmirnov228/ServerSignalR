@@ -38,6 +38,9 @@ namespace ServerNetCore
             //    options.UseInMemoryDatabase("Auth"));
 
             services.AddIdentity<User, IdentityRole>()
+
+                .AddErrorDescriber<CustomIdentityErrorDescriber>()
+
                 //.AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
