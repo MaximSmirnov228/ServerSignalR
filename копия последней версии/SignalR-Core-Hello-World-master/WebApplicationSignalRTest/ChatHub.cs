@@ -12,9 +12,6 @@ namespace WebApplicationSignalRTest
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ChatHub : Hub
     {
-        //доделать надо
-        //private readonly ApplicationDbContext context = new ApplicationDbContext();
-
         public async Task SendMessage(string idUser, string message)
         {
             var virtualClientId = Context.User.Identity.Name;

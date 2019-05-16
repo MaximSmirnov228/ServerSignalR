@@ -1,20 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using ServerNetCore.Models;
 using Microsoft.AspNetCore.Identity;
 using ServerNetCore.ViewModels;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
-using System.Net.Http;
-using System.Net;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace ServerNetCore.Controllers
@@ -29,8 +21,6 @@ namespace ServerNetCore.Controllers
         }
 
         [HttpPost]
-
-        //[Route("api/[controller]/GetToken")]
         public async Task<IActionResult> Register([FromBody]RegisterModel model)
         {
             if (ModelState.IsValid)

@@ -10,15 +10,15 @@ namespace ServerNetCore.Models
     public class User : IdentityUser
     {
         [Required]
-        [Display(Name = "FirstName")]
+        [Display(Name = "Имя")]
         public string FirstName { get; set; }
 
         [Required]
-        [Display(Name = "LastName")]
+        [Display(Name = "Фамилия")]
         public string LastName { get; set; }
 
         [Required]
-        [Display(Name = "Gender")]
+        [Display(Name = "Пол")]
         public string Gender { get; set; }
     }
 }

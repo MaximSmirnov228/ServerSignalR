@@ -90,7 +90,6 @@ namespace ClientNetCore
             }
             string body = JsonConvert.SerializeObject(r);
             request.AddParameter("undefined", body, ParameterType.RequestBody);
-            //request.AddParameter("undefined", $"{{\"FirstName\":{FirstName},\n\"LastName\":{LastName},\n\"Gender\":{Gender},\n\"Email\":{Email},\n\"Password\":{Password}\n}}", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
             if (response.Content != "Успешно")
             {

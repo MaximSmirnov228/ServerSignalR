@@ -1,21 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
-using ServerNetCore.Data;
 using ServerNetCore.Models;
-using ServerNetCore.ViewModels;
 
 namespace ServerNetCore.Controllers
 {
@@ -44,7 +37,6 @@ namespace ServerNetCore.Controllers
                     System.Console.WriteLine(token);
                     var credentialstring = Encoding.UTF8.GetString(Convert.FromBase64String(token));
                     var credentials = credentialstring.Split(':');
-
                     var user = await _userManager.FindByEmailAsync(credentials[0]);
                     if (user == null)
                     {
