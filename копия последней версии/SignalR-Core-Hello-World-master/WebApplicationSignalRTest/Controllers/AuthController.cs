@@ -24,8 +24,6 @@ namespace ServerNetCore.Controllers
         }
 
         [HttpGet]
-        //[AllowAnonymous]
-        //[Route("api/[controller]/GetToken")]
         public async Task<IActionResult> GetToken()
         {
             if (HttpContext.Request.Headers.TryGetValue("Authorization", out var authorization))
