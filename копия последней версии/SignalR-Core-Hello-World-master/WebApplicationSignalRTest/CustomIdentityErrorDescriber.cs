@@ -20,7 +20,7 @@ namespace ServerNetCore
 
         public override IdentityError PasswordMismatch()
         {
-            return new IdentityError { Code = nameof(PasswordMismatch), Description = "Incorrect password." };
+            return new IdentityError { Code = nameof(PasswordMismatch), Description = "Неверный пароль." };
         }
 
         public override IdentityError InvalidToken()

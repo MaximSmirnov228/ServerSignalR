@@ -12,8 +12,6 @@ using ServerNetCore.Models;
 
 namespace ServerNetCore.Controllers
 {
-    //[Route("api/[controller]")]
-    //[ApiController]
     public class AuthController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
